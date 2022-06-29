@@ -1,0 +1,9 @@
+body {
+    text-align: center;
+}
+nav {
+    border-bottom: 1px solid rebeccapurple;
+    padding-bottom: 1em;
+    display: flex;
+    justify-content: space-evenly;
+}
