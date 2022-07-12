@@ -16,7 +16,14 @@ export const artistsApi = createApi({
     //headers
    })
   }),
+  fetchArtist: builder.query({
+    query: (artistId) => ({
+     url: `/artists/getById?id=${artistId}`,
+     method: 'GET',
+     //headers
+    })
+   }),
  })
 });
 
-export const { useFetchArtistsQuery } = artistsApi;
+export const { useFetchArtistsQuery, useFetchArtistQuery } = artistsApi;

@@ -16,7 +16,21 @@ export const songsApi = createApi({
     //headers
    })
   }),
+  fetchSongsByAlbumId: builder.query({
+    query: (albumId) => ({
+     url: `/songs/getByAlbumId?album_id=${albumId}`,
+     method: 'GET',
+     //headers
+    })
+   }),
+   fetchSongsByArtistId: builder.query({
+    query: (artistId) => ({
+     url: `/songs/getByArtistId?artist_id=${artistId}`,
+     method: 'GET',
+     //headers
+    })
+   }),
  })
 });
 
-export const { useFetchSongsQuery } = songsApi;
+export const { useFetchSongsQuery, useFetchSongsByAlbumIdQuery, useFetchSongQuery, useFetchSongsByArtistIdQuery } = songsApi;

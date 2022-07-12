@@ -16,7 +16,14 @@ export const albumsApi = createApi({
     //headers
    })
   }),
+  fetchAlbum: builder.query({
+    query: (albumId) => ({
+     url: `/albums/getById?id=${albumId}`,
+     method: 'GET',
+     //headers
+    })
+   }),
  })
 });
 
-export const { useFetchAlbumsQuery } = albumsApi;
+export const { useFetchAlbumsQuery, useFetchAlbumQuery } = albumsApi;

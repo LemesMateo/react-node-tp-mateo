@@ -1,8 +1,8 @@
-import MovieImage from "./MovieImage";
+import ArtistImage from "./ArtistImage";
 
 const LeftContainer = ({ imageUrl }) => {
  return (
-  <MovieImage url={imageUrl} />
+  <ArtistImage url={imageUrl} />
  );
 };
 

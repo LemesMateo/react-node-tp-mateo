@@ -9,6 +9,13 @@ const pool = createPool({
     password: '',
 });
 
+pool.getConnection((err, connection) => {
+    if (err) console.warn("No conectado", { "Error": err.message })
+    else {
+        console.dir("Conexión establecida...")
+        pool.releaseConnection(connection)
+    }
+})
 
 pool.query = util.promisify(pool.query);
 module.exports = pool;

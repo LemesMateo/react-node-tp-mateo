@@ -7,7 +7,7 @@ const Loading = ({ message }) => {
    />
    <p className="mt-3">{message}</p>
   </div>
- );
-}
+ )
+};
 
 export default Loading;

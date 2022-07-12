@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import Chairs from '../../assets/chairs.png';
 
-const Home = () => {
+/* const Home = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
@@ -54,5 +53,5 @@ const Home = () => {
    </div>
   );
 };
-
+ */
 export default Home;

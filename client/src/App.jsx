@@ -1,10 +1,12 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createSearchParams, Link, Outlet } from "react-router-dom";
 import { useFetchSongsQuery } from "./redux/api/songs";
 import { useFetchArtistsQuery } from "./redux/api/artists";
 import { useFetchAlbumsQuery } from "./redux/api/albums";
-import Results, * as Albums from "./views/Albums/Results"
+import {default as Albums} from './views/Albums/Results';
+import {default as Artists} from './views/Artists/Results';
+import {default as Songs} from './views/Songs/Results';
 
 function App() {
   const [search, setSearch] = useState([]);
@@ -14,66 +16,63 @@ function App() {
     isSuccess: isSuccessSongs,
     isFetching: isFetchingSongs,
     error: errorSongs,
-  } = useFetchSongsQuery(search);
+  } = useFetchSongsQuery(search, {skip: search.length>2 ? false : true});
   const {
     data: artists,
     isLoading: isLoadingArtists,
     isSuccess: isSuccessArtists,
     isFetching: isFetchingArtists,
     error: errorArtists,
-  } = useFetchArtistsQuery(search);
-  
+  } = useFetchArtistsQuery(search, {skip: search.length>2 ? false : true});
+  const {
+    data: albums,
+    isLoading: isLoadingAlbums,
+    isSuccess: isSuccessAlbums,
+    isFetching: isFetchingAlbums,
+    error: errorAlbums,
+  } = useFetchAlbumsQuery(search, {skip: search.length>2 ? false : true});
 
   const inputSearchChangeHandler = (e) => {
     setSearch(e.target.value);
   };
+  let propAlbums = {
+    albums, isLoadingAlbums, isSuccessAlbums, isFetchingAlbums, errorAlbums
+  }
+   let propArtists = {
+    artists, isLoadingArtists, isSuccessArtists, isFetchingArtists, errorArtists
+   }
 
-  const SongsMap = () => {
-    return songs.map((user) => <div key={user.id}>{user.title}</div>)
-  }
-  const ArtistsMap = () => {
-    return artists.map((user) => <div key={user.id}>{user.name}</div>)
-  }
-  const AlbumsMap = () => {
-    return albums.map((user) => <div key={user.id}>{user.title}</div>)
-  }
+   let propSongs = {
+    songs, isLoadingSongs, isSuccessSongs, isFetchingSongs, errorSongs
+   }
+
+ 
   return (
     <div>
       <ul>
         <nav>
           <Link to={"/"} className="text-3xl font-bold underline" >Home</Link>
-          <Link to={"/artists"} className="text-3xl font-bold underline">Artistas</Link>
           <Link to={"/top10"} className="text-3xl font-bold underline">Top10</Link>
-          <Outlet></Outlet>
         </nav>
+        </ul>
         <input
+          className="input"
+          type="text"
+          name="text"
+          required=""
+          placeholder="Search Songs, Artists, Albums"
+          id="search"
           value={search}
           onChange={(e) => inputSearchChangeHandler(e)}
         ></input>
         
-        {isSuccessSongs && search.length > 2 ? ( 
-          <div><h3>Songs</h3>
-          <SongsMap />
-          </div>         
-          ) : isFetchingSongs ? (
-          <h3>Loading...</h3>
-        ) : (
-          <></>
-        )}      
-         {isSuccessArtists && search.length > 2 ? (
-          <div>
-          <h3>Artists</h3>
-          <ArtistsMap/>
-          </div>
-        ) : isFetchingArtists ? (
-          <h3>Loading...</h3>
-        ) : (
-          <></>
-        )}
-         <Albums title={search} />
-      </ul>
+            <Artists {...propArtists}/>
+            <Songs {...propSongs}/>
+          <Albums {...propAlbums}  />      
     </div>
   );
 }
+
+
 
 export default App;
