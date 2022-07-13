@@ -1,23 +1,16 @@
-const ListItem = ({ id, cover_medium, title, onListItemClick }) => {
+const ListItem = ({ id, cover_small, title, onListItemClick }) => {
   const handleListItemClick = () => {
     onListItemClick(id);
   };
 
   return (
-    <div key={id} className="flex flex-row w-full mt-16" style={{ minWidth: 650 }}>
+    <div key={id} className="flex w-full mt-3 justify-center" >
      <div className="w-1/6">
-      <img src={cover_medium} alt={title} className="w-32" />
+      <img src={cover_small} alt={title} className="w-14  hover:scale-110 transition duration-300 ease-in-out" />
      </div>
-     <div className="w-5/6 flex flex-col items-start py-1 px-4">
-      <p className="font-lato text-3xl">{title ?? "Sin titulo"}</p>
+     <div className="w-5/6 flex flex-col items-start px-4">
+      <button className="font-lato text-3x font-bold text-white capitalize fancybutton max-w-sm" onClick={handleListItemClick}>{title ?? "Sin titulo"}</button>
       <div className="flex h-full items-end">
-       <button 
-        className="border-2 border-red-400 rounded-md 
-          w-48 h-10 text-xl text-red-400 hover:bg-red-400 hover:text-white"
-        onClick={handleListItemClick}
-       >
-        Ver mas
-       </button>
       </div>
      </div>
     </div>

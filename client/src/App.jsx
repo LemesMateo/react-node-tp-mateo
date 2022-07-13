@@ -7,6 +7,7 @@ import { useFetchAlbumsQuery } from "./redux/api/albums";
 import {default as Albums} from './views/Albums/Results';
 import {default as Artists} from './views/Artists/Results';
 import {default as Songs} from './views/Songs/Results';
+import Navbar from "./components/Navbar";
 
 function App() {
   const [search, setSearch] = useState([]);
@@ -50,10 +51,12 @@ function App() {
   return (
     <div>
       <ul>
-        <nav>
-          <Link to={"/"} className="text-3xl font-bold underline" >Home</Link>
-          <Link to={"/top10"} className="text-3xl font-bold underline">Top10</Link>
-        </nav>
+        <Navbar></Navbar>
+        {/* <nav className="justify-evenly flex">
+
+          <Link to={"/"} className="text-3xl font-bold text-gray-400 " >Home</Link>
+          <Link to={"/top10"} className="text-3xl font-bold text-gray-400">Top10</Link>
+        </nav> */}
         </ul>
         <input
           className="input"
@@ -64,11 +67,15 @@ function App() {
           id="search"
           value={search}
           onChange={(e) => inputSearchChangeHandler(e)}
-        ></input>
-        
-            <Artists {...propArtists}/>
+        >
+          
+        </input>
+
+        <div className="flex flex-col sm:flex-row justify-evenly" >
             <Songs {...propSongs}/>
+            <Artists {...propArtists}/>
           <Albums {...propAlbums}  />      
+        </div>
     </div>
   );
 }

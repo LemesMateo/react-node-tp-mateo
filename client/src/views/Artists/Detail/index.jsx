@@ -32,7 +32,7 @@ console.log(artistId, artistDetail, songs)
   }
   return (
    <>
-    <LeftContainer imageUrl={artistDetail.picture_medium} />
+    <LeftContainer imageUrl={artistDetail.picture_small} />
     <RightContainer
      name={artistDetail.name ?? 'Sin titulo'}
     />

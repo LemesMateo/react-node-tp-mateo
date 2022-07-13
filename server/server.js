@@ -107,12 +107,20 @@ app.post("/api/albums/add", async (req, res) => {
     await albumsModel.addAlbum(req.body);
 });
 
-router.post("/api/albums/edit", async (req, res) => {
+router.put("/api/albums/edit", async (req, res) => {
     await albumsModel.editAlbum([...req.body, req.body.id]);    
 });
 
-router.get("/api/albums/delete", async (req, res) => {
-    await albumsModel.deleteAlbum(req.query.id);
+router.delete("/api/albums/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    client.query("delete from album where id = ?"), id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    }
+    
 });
 
 router.post("/api/artists/add", async (req, res) => {
