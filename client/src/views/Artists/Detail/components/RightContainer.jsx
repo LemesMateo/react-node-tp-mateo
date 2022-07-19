@@ -2,7 +2,7 @@ const RightContainer = ({
  name 
 }) => {
  return (
-  <div className="flex flex-col w-2/3 items-start overflow-y-auto my-16 justify-center">
+  <div className="flex flex-row items-start overflow-y-auto my-16 justify-center text-orange-500">
    <h2 className="text-4xl font-bold my-1">
     {`${name}`}
    </h2>

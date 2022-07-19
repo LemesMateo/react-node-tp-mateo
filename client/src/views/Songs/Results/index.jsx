@@ -24,7 +24,7 @@ const Results = (props) => {
     <span></span>
   </div>);
   else if (isSuccessSongs && songs)
-    return (<div><h3 className='font-bold font-lato text-3xl text-white '  >Songs</h3><List data={songs} onListItemClick={handleListItemClick} /></div>);
+    return (<div><h3 className='font-bold font-lato sm:text-3xl text-sm text-white mt-2'>Songs</h3><List data={songs} onListItemClick={handleListItemClick} /></div>);
  };
 
  return (

@@ -74,8 +74,6 @@ nav {
  /* From uiverse.io by @namecho */
 .fancybutton,
 .fancybutton::after {
- padding: 16px 20px;
- font-size: 18px;
  background: linear-gradient(45deg, transparent 5%, #FF8D29 5%);
  border: 0;
  color: #fff;

@@ -21,7 +21,7 @@ const {
         error: errorSongs,
       } = useFetchSongsByAlbumIdQuery(albumId);
       const SongsMap = () => {
-        return songs.map((user) => <div key={user.id}>{user.title}</div>)
+        return songs.map((user) => <div className="text-white" key={user.id}>{user.title}</div>)
       }
 console.log(albumId, albumDetail, songs)
  const renderContent = () => {
@@ -37,7 +37,7 @@ console.log(albumId, albumDetail, songs)
      title={albumDetail.title ?? 'Sin titulo'}
     />
     {songs && songs.length > 0 ? ( 
-          <div><h3>Songs</h3>
+          <div><h3 className="text-white justify-center items-center" >Songs</h3>
           <SongsMap />
           </div>         
           ) : isFetchingSongs ? (
@@ -50,7 +50,7 @@ console.log(albumId, albumDetail, songs)
  };
 
   return (
-  <div className="flex flex-row px-16 h-screen items-center justify-center">
+  <div className="flex flex-row  items-center justify-center">
    {renderContent()}
   </div>
  );

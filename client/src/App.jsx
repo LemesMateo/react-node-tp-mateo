@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState } from "react";
-import { createSearchParams, Link, Outlet } from "react-router-dom";
+import { createSearchParams, Link, Outlet, Route, Routes } from "react-router-dom";
 import { useFetchSongsQuery } from "./redux/api/songs";
 import { useFetchArtistsQuery } from "./redux/api/artists";
 import { useFetchAlbumsQuery } from "./redux/api/albums";
@@ -8,75 +8,34 @@ import {default as Albums} from './views/Albums/Results';
 import {default as Artists} from './views/Artists/Results';
 import {default as Songs} from './views/Songs/Results';
 import Navbar from "./components/Navbar";
-
+import Home from './views/Home/Home'
+import Layout from "./components/Layout";
+import {default as AlbumDetails} from "./views/Albums/Detail"
+import {default as ArtistDetails} from "./views/Artists/Detail"
+import {default as SongDetails} from "./views/Songs/Detail"
+import RequireAuth from "./features/auth/RequireAuth";
+import Welcome from "./features/auth/Welcome";
+import UsersList from "./features/users/UsersList";
+import Login from "./services/login";
 function App() {
-  const [search, setSearch] = useState([]);
-  const {
-    data: songs,
-    isLoading: isLoadingSongs,
-    isSuccess: isSuccessSongs,
-    isFetching: isFetchingSongs,
-    error: errorSongs,
-  } = useFetchSongsQuery(search, {skip: search.length>2 ? false : true});
-  const {
-    data: artists,
-    isLoading: isLoadingArtists,
-    isSuccess: isSuccessArtists,
-    isFetching: isFetchingArtists,
-    error: errorArtists,
-  } = useFetchArtistsQuery(search, {skip: search.length>2 ? false : true});
-  const {
-    data: albums,
-    isLoading: isLoadingAlbums,
-    isSuccess: isSuccessAlbums,
-    isFetching: isFetchingAlbums,
-    error: errorAlbums,
-  } = useFetchAlbumsQuery(search, {skip: search.length>2 ? false : true});
-
-  const inputSearchChangeHandler = (e) => {
-    setSearch(e.target.value);
-  };
-  let propAlbums = {
-    albums, isLoadingAlbums, isSuccessAlbums, isFetchingAlbums, errorAlbums
-  }
-   let propArtists = {
-    artists, isLoadingArtists, isSuccessArtists, isFetchingArtists, errorArtists
-   }
-
-   let propSongs = {
-    songs, isLoadingSongs, isSuccessSongs, isFetchingSongs, errorSongs
-   }
-
- 
   return (
+    <>
     <div>
-      <ul>
-        <Navbar></Navbar>
-        {/* <nav className="justify-evenly flex">
-
-          <Link to={"/"} className="text-3xl font-bold text-gray-400 " >Home</Link>
-          <Link to={"/top10"} className="text-3xl font-bold text-gray-400">Top10</Link>
-        </nav> */}
-        </ul>
-        <input
-          className="input"
-          type="text"
-          name="text"
-          required=""
-          placeholder="Search Songs, Artists, Albums"
-          id="search"
-          value={search}
-          onChange={(e) => inputSearchChangeHandler(e)}
-        >
-          
-        </input>
-
-        <div className="flex flex-col sm:flex-row justify-evenly" >
-            <Songs {...propSongs}/>
-            <Artists {...propArtists}/>
-          <Albums {...propAlbums}  />      
-        </div>
+    <Routes>
+      <Route path="/" element={<Layout/>}> 
+        <Route path='/albums/detail/:albumId' element={<AlbumDetails/>}/>
+        <Route path='/artists/detail/:artistId' element={<ArtistDetails/>}/>
+        <Route path='/songs/detail/:songId' element={<SongDetails/>}/>
+        <Route path="login" element={<Login/>}/>
+        <Route element={<RequireAuth/>}>
+          <Route path="welcome" element={<Welcome/>}/>
+          <Route path="userslist" element={<UsersList/>}/>
+        </Route>
+      </Route>
+    </Routes>        
+        
     </div>
+    </>
   );
 }
 

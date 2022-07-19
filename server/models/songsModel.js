@@ -1,12 +1,11 @@
 const pool = require("../db")
 
 const addSong = async (data) => {
+    const query = "INSERT INTO song SET ?";
     try {
-      const query = "insert into song set ?";
-      const row = await pool.query(query, [data]);
-      return row;
+      return await pool.query(query, post)
     } catch (error) {
-      console.log(error);
+      error.message = error.code;
     }
 };
 

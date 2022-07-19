@@ -10,7 +10,7 @@ const ListItem = ({ id, picture_small, name, onListItemClick }) => {
       <img src={picture_small} alt={name} className="w-14 hover:scale-110 transition duration-300 ease-in-out" />
      </div>
      <div className="w-5/6 flex flex-col items-start px-4">
-      <button className="font-lato text-3xl font-bold text-white fancybutton capitalize" onClick={handleListItemClick}>{name ?? "Sin titulo"}</button>
+      <button className="font-lato sm:text-xl text-sm font-bold text-white p-4 fancybutton capitalize" onClick={handleListItemClick}>{name ?? "Sin titulo"}</button>
       <div className="flex h-full items-end">
       </div>
      </div>

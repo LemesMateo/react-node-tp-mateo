@@ -18,7 +18,8 @@ const listAll = async(req, res, next) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                image: user.image
+                image: user.image,
+                password: user.password
             }
             return filteredUser
         })
@@ -32,12 +33,13 @@ const listOne = async(req, res, next) => {
     const dbResponse = await getUserById(+req.params.id);
     if (dbResponse instanceof Error) return next(dbResponse)
     if (!dbResponse.length) return next()
-    const { id, name, email, image } = dbResponse[0]
+    const { id, name, email, image, password } = dbResponse[0]
     const responseUser = {
         id,
         name,
         email,
-        image
+        image,
+        password
     }
     res.status(200).json(responseUser)
 }

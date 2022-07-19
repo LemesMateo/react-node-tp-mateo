@@ -1,58 +1,42 @@
 import { useParams } from "react-router";
-import LeftContainer from "./components/LeftContainer";
-import RightContainer from "./components/RightContainer";
 import Loading from "../../../components/Loading";
-import { useFetchAlbumQuery } from "../../../redux/api/albums";
-import { useFetchSongsByAlbumIdQuery } from "../../../redux/api/songs";
+import SongTitle from "./components/SongTitle";
+import Lyrics from "./components/Lyrics"
+import { useFetchSongQuery, useAddSongMutation, useDeleteSongMutation, useUpdateSongMutation } from "../../../redux/api/songs";
 const Detail = () => {
-const { albumId } = useParams();
+const { songId } = useParams();
 const {
-        data: albumDetail,
-        isLoading,
-        isSuccess,
-        isFetching,
-        error,
-      } = useFetchAlbumQuery(albumId);
-const {
-        data: songs,
-        isLoading: isLoadingSongs,
-        isSuccess: isSuccessSongs,
-        isFetching: isFetchingSongs,
-        error: errorSongs,
-      } = useFetchSongsByAlbumIdQuery(albumId);
-      const SongsMap = () => {
-        return songs.map((user) => <div key={user.id}>{user.title}</div>)
-      }
-console.log(albumId, albumDetail, songs)
+        data: songDetail,
+        isLoading: isLoadingSong,
+        isSuccess: isSuccessSong,
+        isFetching: isFetchingSong,
+        error: errorSong,
+      } = useFetchSongQuery(songId);
+/* const [addSong] = useAddSongMutation()
+const [updateSong] = useUpdateSongMutation()
+const [deleteSong] = useDeleteSongMutation() */
  const renderContent = () => {
-  if (isLoading || isFetching) {
+  if (isLoadingSong || isFetchingSong) {
    return <Loading message="Obteniendo informacion de la canción..." />;
-  } else if (error) {
+  } else if (errorSong) {
    return <p>Ha ocurrido un error al obtener la informacion de la canción</p>;
   }
   return (
    <>
-    <LeftContainer imageUrl={albumDetail.cover_big} />
-    <RightContainer
-     title={albumDetail.title ?? 'Sin titulo'}
+    <SongTitle
+     title={songDetail.title ?? 'Sin titulo 2'}
     />
-    {songs && songs.length > 0 ? ( 
-          <div><h3>Songs</h3>
-          <SongsMap />
-          </div>         
-          ) : isFetchingSongs ? (
-          <h3>Loading...</h3>
-        ) : (
-          <></>
-        )}
+    <Lyrics lyrics={songDetail.lyrics} />
    </>
   )
  };
 
-  return (
+return (
+    <>
   <div className="flex flex-row px-16 h-screen items-center justify-center">
    {renderContent()}
   </div>
+  </>
  );
 };
 

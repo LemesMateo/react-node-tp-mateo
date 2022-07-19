@@ -21,9 +21,8 @@ const {
         error: errorSongs,
       } = useFetchSongsByArtistIdQuery(artistId);
       const SongsMap = () => {
-        return songs.map((user) => <div key={user.id}>{user.title}</div>)
+        return songs.map((user) => <div className="text-white flex justify-center" key={user.id}>{user.title}</div>)
       }
-console.log(artistId, artistDetail, songs)
  const renderContent = () => {
   if (isLoading || isFetching) {
    return <Loading message="Obteniendo informacion del artista..." />;
@@ -32,12 +31,12 @@ console.log(artistId, artistDetail, songs)
   }
   return (
    <>
-    <LeftContainer imageUrl={artistDetail.picture_small} />
+    <LeftContainer imageUrl={artistDetail.picture_medium} />
     <RightContainer
      name={artistDetail.name ?? 'Sin titulo'}
     />
     {songs && songs.length > 0 ? ( 
-          <div><h3>Songs</h3>
+          <div><h3 className="text-orange-500 text-2xl flex justify-start">Songs</h3>
           <SongsMap />
           </div>         
           ) : isFetchingSongs ? (

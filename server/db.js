@@ -1,12 +1,11 @@
-const {createPool} = require("mysql");
+const mysql = require("mysql");
 const util = require("util");
 
-const pool = createPool({
-    connectionLimit: 10,
-    host: 'localhost',
-    database: 'rocklyrics',
-    user: 'root',
-    password: '',
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_NAME || 'rocklyrics',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASS || '',
 });
 
 pool.getConnection((err, connection) => {

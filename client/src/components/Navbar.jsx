@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "../App.css";
-import Logo from '../../public/img/Logo MM.png'
-import Logo2 from '../../public/img/Logo MM3.png'
+import Logo from '../public/img/Logo MM.png'
+import Logo2 from '../public/img/Logo MM3.png'
+import { Link, Outlet } from "react-router-dom";
+import loginService from '../services/login'
 
 const Navbar = () => {
     const [isShown, setIsShown] = useState(false);
@@ -14,6 +16,28 @@ const Navbar = () => {
   const handleClickMb = event => { 
     setIsShownMb(current => !current);
    };
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      const user = await loginService.login({
+        username, password,
+      })
+      setUser(user)
+      setUsername('')
+      setPassowrd('')
+    } catch (exception) {
+      setErrorMessage ('Wrong credentials')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+    console.log('logging in with', username, password)
+  }
 
 
     return (
@@ -56,13 +80,11 @@ const Navbar = () => {
         <div className="hidden sm:block sm:ml-6">
           <div className="flex py-2 space-x-4">
            {/*  <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-            <a href="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
+            <a href="/" className="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium" aria-current="page">Home</a>
 
-            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Artists</a>
-
-            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</a>
-
-            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">Register</a>
+            <Link to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">Login</Link>
+            {/* <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">Login</a> */}
           </div>
         </div>
       </div>
@@ -106,7 +128,6 @@ const Navbar = () => {
      {/*  <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
       <a href="#" className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</a>
 
-      <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Artists</a>
 
       <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Register</a>
 
@@ -116,8 +137,28 @@ const Navbar = () => {
        )
     }
 </nav>
+<form onSubmit={handleLogin}>
+  <div  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
+    username
+    <input 
+    type="text"
+    value={username}
+    name="Username"
+    onChange={({ target }) => setUsername(target.value)}
+    />
+  </div>
+  <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize">
+    password
+    <input 
+    type="text"
+    value={password}
+    name="Password"
+    onChange={({ target }) => setPassword(target.value)}
+    />
+  </div>
+  <button type="submit" ></button>
+</form>
 </>
-
     )
 
 };
