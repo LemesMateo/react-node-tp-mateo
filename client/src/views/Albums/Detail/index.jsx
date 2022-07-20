@@ -21,7 +21,7 @@ const {
         error: errorSongs,
       } = useFetchSongsByAlbumIdQuery(albumId);
       const SongsMap = () => {
-        return songs.map((user) => <div className="text-white" key={user.id}>{user.title}</div>)
+        return songs.map((user) => <div className="flex justify-center px-6 text-clip text-xl text-orange-300" key={user.id}>{user.title}</div>)
       }
 console.log(albumId, albumDetail, songs)
  const renderContent = () => {
@@ -31,13 +31,13 @@ console.log(albumId, albumDetail, songs)
    return <p>Ha ocurrido un error al obtener la informacion del album</p>;
   }
   return (
-   <>
-    <LeftContainer imageUrl={albumDetail.cover_big} />
+    <>
     <RightContainer
      title={albumDetail.title ?? 'Sin titulo'}
     />
+    <LeftContainer imageUrl={albumDetail.cover_big} />
     {songs && songs.length > 0 ? ( 
-          <div><h3 className="text-white justify-center items-center" >Songs</h3>
+          <div className="block h-screen p-6 rounded-lg items-center justify-center max-w-sm m-5 px-5 pb-16 text-center" ><h3 className="text-orange-500 text-3xl px-6 flex justify-center" >Songs</h3>
           <SongsMap />
           </div>         
           ) : isFetchingSongs ? (
@@ -50,7 +50,7 @@ console.log(albumId, albumDetail, songs)
  };
 
   return (
-  <div className="flex flex-row  items-center justify-center">
+  <div className="flex flex-col px-16 h-screen items-center justify-center">
    {renderContent()}
   </div>
  );

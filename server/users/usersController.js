@@ -67,6 +67,7 @@ const register = async(req, res, next) => {
 const login = async(req, res, next) => {
     const dbResponse = await loginUser(req.body.email);
     if (!dbResponse.length) return next();
+    console.log("Password:", req.body.password, dbResponse[0].password)
     if (await compare(req.body.password, dbResponse[0].password)) {
         const user = {
             id: dbResponse[0].id,
@@ -74,6 +75,7 @@ const login = async(req, res, next) => {
             email: dbResponse[0].email
         }
         const token = await tokenSign(user, "3h")
+        console.log("token:", token)
         res.status(200).json({ message: "User logged in!", JWT: token })
     } else {
         let error = new Error("Unauthorized")
