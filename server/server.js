@@ -8,8 +8,13 @@ const client = require("./db.js");
 const app = express();
 const router = express.Router();
 const loginRouter = require("./controllers/login");
-
-app.use(cors());
+var options = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+app.use(cors(options));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/login", loginRouter);
@@ -138,15 +143,16 @@ app.get("/api/songs/getById", async (req, res) => {
 }); */
 
 app.post("/api/songs/add", async (req, res) => {
-  const readable = req.body.readable;
+  //const readable = req.body.readable;
+  console.log('/api/songs/add',req.body)
   const title = req.body.title;
-  const link = req.body.link;
-  const duration = req.body.duration;
-  const rank = req.body.rank;
-  const preview = req.body.preview;
-  const type = req.body.type;
-  const artist_id = req.body.artist_id;
-  const album_id = req.body.album_id;
+  //const link = req.body.link;
+  //const duration = req.body.duration;
+  //const rank = req.body.rank;
+  //const preview = req.body.preview;
+  const type = 'track';
+  const artist_id = req.body.artistId;
+  const album_id = req.body.albumId;
   const lyrics = req.body.lyrics;
 
   /*  await client.query(`INSERT INTO song SET ${req.body}`, (err, rows) => {
@@ -157,14 +163,15 @@ app.post("/api/songs/add", async (req, res) => {
           }
     }); */
   client.query(
-    `INSERT INTO song (readable, title, link, duration, rank, preview, type, artist_id, album_id, lyrics) VALUES (?,?,?,?,?,?,?,?,?,?)`,
+    //`INSERT INTO song (readable, title, link, duration, rank, preview, type, artist_id, album_id, lyrics) VALUES (?,?,?,?,?,?,?,?,?,?)`,
+    `INSERT INTO song (title,type, artist_id, album_id, lyrics) VALUES (?,?,?,?,?)`,
     [
-      readable,
+      //readable,
       title,
-      link,
-      duration,
-      rank,
-      preview,
+      //link,
+      //duration,
+      //rank,
+      //preview,
       type,
       artist_id,
       album_id,
@@ -180,10 +187,12 @@ app.post("/api/songs/add", async (req, res) => {
   );
 });
 
-app.patch("/api/songs/edit/:id", (req, res) => {
+app.post("/api/songs/edit/:id", (req, res) => {
   const id = req.params.id;
-  const title = req.body.title;
-  const lyrics = req.body.lyrics;
+  const title = req.body.title.replace(/"/g, '');
+  const lyrics = req.body.lyrics.replace(/"/g, '');
+
+  console.log("patch(/api/songs/edit)", title, lyrics)
   client.query(
     `UPDATE song SET title="${title}", lyrics="${lyrics}" WHERE id="${id}"`,
     [title, lyrics, id],
@@ -201,8 +210,9 @@ app.patch("/api/songs/edit/:id", (req, res) => {
     await songsModel.editSong(...req.body, req.body.id);    
 });
  */
-app.delete("/api/songs/delete/:id", async (req, res) => {
-  const id = req.params.id;
+app.delete("/api/songs/delete/:songId", async (req, res) => {
+  console.log('/api/songs/delete/', req.params.songId)
+  const id = req.params.songId;
   client.query("DELETE FROM song WHERE id = ?", id, (err, result) => {
     if (err) {
       console.log(err);

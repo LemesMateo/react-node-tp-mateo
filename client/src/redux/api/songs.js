@@ -48,18 +48,16 @@ export const songsApi = createApi({
     }),
     updateSong: builder.mutation({
       query: (song) => ({
-        url: `/songs/edit`,
-        method: "PATCH",
+        url: `/songs/edit/${song.id}`,
+        method: "POST",
         body: song,
         invalidatesTags: ['Songs']
       }),
     }),
     deleteSong: builder.mutation({
-      query: ({ songId }) => ({
-        url: `/song/delete/${songId}`,
-        method: "DELETE",
-        body: songId,
-        invalidatesTags: ['Songs']
+      query: ( songId ) => ({
+        url: `/songs/delete/${songId}`,
+        method: "DELETE"
       }),
     }),
   }),

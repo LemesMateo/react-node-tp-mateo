@@ -22,6 +22,7 @@ function App() {
         <Route path='/albums/detail/:albumId' element={<AlbumDetails/>}/>
         <Route path='/artists/detail/:artistId' element={<ArtistDetails/>}/>
         <Route path='/songs/detail/:songId' element={<SongDetails/>}/>
+        <Route path='/songs/add/:albumId/:artistId' element={<SongDetails/>}/>
         <Route path="/login" element={<Login setLogoutUser={setLogoutUser}/>}/>
         <Route path="/register" element={<Register setLogoutUser={setLogoutUser}/>}/>
       </Route>

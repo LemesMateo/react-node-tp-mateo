@@ -2,8 +2,9 @@ import { useParams } from "react-router";
 import LeftContainer from "./components/LeftContainer";
 import RightContainer from "./components/RightContainer";
 import Loading from "../../../components/Loading";
+import { Link } from "react-router-dom";
 import { useFetchAlbumQuery } from "../../../redux/api/albums";
-import { useFetchSongsByAlbumIdQuery } from "../../../redux/api/songs";
+import { useFetchSongsByAlbumIdQuery, useDeleteSongMutation } from "../../../redux/api/songs";
 const Detail = () => {
 const { albumId } = useParams();
 const {
@@ -19,10 +20,22 @@ const {
         isSuccess: isSuccessSongs,
         isFetching: isFetchingSongs,
         error: errorSongs,
+        refetch 
       } = useFetchSongsByAlbumIdQuery(albumId);
-      const SongsMap = () => {
-        return songs.map((user) => <div className="flex justify-center px-6 text-clip text-xl text-orange-300" key={user.id}>{user.title}</div>)
-      }
+  const [
+    deleteSong, // This is the mutation trigger
+    { data: deleteResponse, errorDelete, isLoading: isDelete }, // This is the destructured mutation result
+  ] = useDeleteSongMutation()
+        
+const deleteHandler = (songId) =>
+{
+  console.log('deleteHandler', songId)
+  deleteSong(songId);
+  refetch();
+}
+const SongsMap = () => {
+  return songs.map((song) => <div className="flex justify-center px-6 text-clip text-xl text-orange-300" key={song.id}><h2>{song.title}</h2><button onClick={(e) =>deleteHandler(song.id)}>delete</button></div>)
+}
 console.log(albumId, albumDetail, songs)
  const renderContent = () => {
   if (isLoading || isFetching) {
@@ -39,6 +52,11 @@ console.log(albumId, albumDetail, songs)
     {songs && songs.length > 0 ? ( 
           <div className="block h-screen p-6 rounded-lg items-center justify-center max-w-sm m-5 px-5 pb-16 text-center" ><h3 className="text-orange-500 text-3xl px-6 flex justify-center" >Songs</h3>
           <SongsMap />
+          <Link to={`/songs/add/${albumId}/${songs[0].artist_id}`}>
+            <button className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
+            add songs
+            </button>
+          </Link>
           </div>         
           ) : isFetchingSongs ? (
           <h3>Loading...</h3>

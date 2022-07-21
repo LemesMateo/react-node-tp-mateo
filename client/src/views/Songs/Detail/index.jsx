@@ -1,11 +1,13 @@
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import Loading from "../../../components/Loading";
 import SongTitle from "./components/SongTitle";
 import Lyrics from "./components/Lyrics"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetchSongQuery, useAddSongMutation, useDeleteSongMutation, useUpdateSongMutation } from "../../../redux/api/songs";
 const Detail = () => {
-const { songId } = useParams();
+const navigate = useNavigate();
+const { songId, albumId, artistId } = useParams();
+console.log("params:",songId, albumId, artistId)
 const {
         data: songDetail,
         isLoading: isLoadingSong,
@@ -13,6 +15,24 @@ const {
         isFetching: isFetchingSong,
         error: errorSong,
       } = useFetchSongQuery(songId);
+      
+      useEffect(() => {
+        if(albumId && artistId)
+        {
+          setSongDetailForEdit({
+            albumId:albumId,
+            artistId:artistId,
+            title:'',
+            lyrics:''
+          });  
+          setIsEdit(true);
+        }
+        else{
+          setSongDetailForEdit(songDetail);
+        }
+        
+      }, [songDetail])
+      
 
 /* const handleSubmit = (e) => {
   e.preventDefault();
@@ -36,6 +56,52 @@ const {
 </form>
  */
 
+
+
+  const [isEdit, setIsEdit] = useState(false);
+  const [songDetailForEdit, setSongDetailForEdit] = useState(songDetail);  
+  const [
+    updateSong, // This is the mutation trigger
+    { data: updateResponse, error, isLoading: isUpdating }, // This is the destructured mutation result
+  ] = useUpdateSongMutation()
+  const [
+    addSong, // This is the mutation trigger
+    { data: addResponse, addError, isLoading: isAdding }, // This is the destructured mutation result
+  ] = useAddSongMutation()
+
+
+
+  
+  const handleAceptar = () => {
+    setIsEdit(false);
+    console.log("grabamos",songDetailForEdit)
+    
+    console.log(updateResponse, error)
+    if(albumId && artistId){
+      addSong(songDetailForEdit);
+      navigate(`/albums/detail/${albumId}`);
+      
+    } else{
+      updateSong(songDetailForEdit);
+    }
+      
+    //llamar al mutations
+  }
+  const handleCancelar = () => {
+      setIsEdit(false);
+  }
+  const handleEditar = () => {
+      setIsEdit(true);
+  }
+
+  const titleChangeHandler = (e) => {
+    setSongDetailForEdit({...songDetailForEdit, title:e.target.value});
+  };
+
+  const lyricsChangeHandler = (e) => {
+    setSongDetailForEdit({...songDetailForEdit, lyrics:e.target.value});
+  };
+
  const renderContent = () => {
   if (isLoadingSong || isFetchingSong) {
    return <Loading message="Obteniendo informacion de la canción..." />;
@@ -45,10 +111,16 @@ const {
   return (
    <>
    <div className="flex-row  place-items-center">
+   {isEdit ? (
+            <div>
+            <button onClick={handleAceptar} >Aceptar</button>
+            <button onClick={handleCancelar} >Cancelar</button>
+            </div>
+        ) : (<button onClick={handleEditar} >Editar</button>)}
     <SongTitle
-     title={songDetail.title ?? 'Sin titulo 2'}
+     title={songDetailForEdit ?  (songDetailForEdit.title ?? 'Sin titulo 2') : 'Sin titulo 2'} isEdit={isEdit} titleChangeHandler={titleChangeHandler}
     />
-    <Lyrics lyrics={songDetail.lyrics} />
+    <Lyrics lyrics={songDetailForEdit ?  (songDetailForEdit.lyrics ?? '') : ''} isEdit={isEdit} lyricsChangeHandler={lyricsChangeHandler}/>
     </div>
    </>
   )
