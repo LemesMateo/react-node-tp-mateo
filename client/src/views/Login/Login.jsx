@@ -37,7 +37,7 @@ const Login = ({ setLogoutUser }) => {
   };
   return (
     <div>
-      <h2 className="text-white" >Login Page</h2>
+      <h2 className="text-orange-400 font-bold text-xl" >Login Page</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form
         noValidate
@@ -45,29 +45,29 @@ const Login = ({ setLogoutUser }) => {
         onSubmit={login}
       >
         
-  <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
-    Username
+  <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
+    E-mail
         <input
           id="username"
           type="text"
-          className="text-slate-800"
+          className="text-slate-800 ml-4 p-4"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         </div>
         <br />
-        <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
+        <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
             Password
         <input
           id="password"
           type="password"
-          className="text-slate-800"
+          className="text-slate-800 ml-4 p-4"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         </div>
         <br />
-        <button type="submit">
+        <button type="submit" className="text-orange-400 border rounded-lg text-bold text-xl" >
           Login
         </button>
       </form>

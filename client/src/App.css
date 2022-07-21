@@ -71,7 +71,6 @@ nav {
  }
 
  /* Button */
- /* From uiverse.io by @namecho */
 .fancybutton,
 .fancybutton::after {
  background: linear-gradient(45deg, transparent 5%, #FF8D29 5%);
@@ -104,6 +103,81 @@ nav {
 }
 
 .fancybutton:hover::after {
+ animation: 1s glitch;
+ animation-timing-function: steps(2, end);
+}
+
+/*More button versions */
+/* Cancel */
+.fancybuttoncancel,
+.fancybuttoncancel::after {
+ background: linear-gradient(45deg, transparent 5%, #990000 5%);
+ border: 0;
+ color: #fff;
+ letter-spacing: 3px;
+ line-height: 1;
+ box-shadow: 6px 0px 0px #00e6f6;
+ outline: transparent;
+ position: relative;
+}
+
+.fancybuttoncancel::after {
+ --slice-0: inset(50% 50% 50% 50%);
+ --slice-1: inset(80% -6px 0 0);
+ --slice-2: inset(50% -6px 30% 0);
+ --slice-3: inset(10% -6px 85% 0);
+ --slice-4: inset(40% -6px 43% 0);
+ --slice-5: inset(80% -6px 5% 0);
+ content: "Cancel";
+ display: block;
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #F94C66 5%);
+ text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+ clip-path: var(--slice-0);
+}
+
+.fancybuttoncancel:hover::after {
+ animation: 1s glitch;
+ animation-timing-function: steps(2, end);
+}
+
+/*Accept */
+.fancybuttonaccept,
+.fancybuttonaccept::after {
+ background: linear-gradient(45deg, transparent 5%, #95CD41 5%);
+ border: 0;
+ color: #fff;
+ letter-spacing: 3px;
+ line-height: 1;
+ box-shadow: 6px 0px 0px #00e6f6;
+ outline: transparent;
+ position: relative;
+}
+
+.fancybuttonaccept::after {
+ --slice-0: inset(50% 50% 50% 50%);
+ --slice-1: inset(80% -6px 0 0);
+ --slice-2: inset(50% -6px 30% 0);
+ --slice-3: inset(10% -6px 85% 0);
+ --slice-4: inset(40% -6px 43% 0);
+ --slice-5: inset(80% -6px 5% 0);
+ content: "Accept";
+ display: block;
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #357C3C 5%);
+ text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+ clip-path: var(--slice-0);
+}
+
+.fancybuttonaccept:hover::after {
  animation: 1s glitch;
  animation-timing-function: steps(2, end);
 }

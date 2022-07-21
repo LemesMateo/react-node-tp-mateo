@@ -5,65 +5,14 @@ import { useRegisterUserMutation } from "../../services/authApi";
 import {toast} from "react-toastify"
 import { useDispatch, useSelector } from "react-redux";
 const Register = ({ setLogoutUser }) => {
-  const [formValue, setFormValue] = useState(initialState);
-  const {loading, error} = useSelector((state) => ({...state.auth}));
-  const {email, password, name, confirmPassword} = formValue;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  useEffect(()=> {
-    error && toast.error(error);
-  }, [error])
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-        return toast.error("Password should match");
-    }
-    if (email && password && name && confirmPassword) {
-        dispatch(register({formValue, navigate, toast}));
-    }
-  };
-  const onInputChange = (e) => {
-    let {name, value} = e.target;
-    setFormValue({...formValue, [name]: value});
-  };
-  
-  /* const [errorMsg, setErrorMsg] = useState(""); 
-  const [registerUser, {data, isError, error}] = useRegisterUserMutation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  let navigate = useNavigate();
 
-  useEffect(()=> {
-    if (data && data.JWT) {
-        localStorage.setItem(
-            "login",
-            JSON.stringify({
-                userLogin: true,
-                token: JWT,
-            })
-        );
-        setErrorMsg("");
-        setName("");
-        setEmail("");
-        setPassword("");
-        setLogoutUser(false);
-        navigate("/");
-    }
-    if (isError) {
-        setErrorMsg(error.response.data.message);
-    }
-    console.log(data)
-  }, [data, isError]);
-  const handleSubmit = (e) => {
+  const login = (e) => {
     e.preventDefault();
-    if (password !== confirmpassword) {
-        return error()
-    }
-    if ( email && password && name && confirmpassword) {
-        dispatch(register({formValue, navigate}))
-    }
-  }
-  const register = async (e) => {
-    e.preventDefault();
-    await registerUser({name, email, password}) */
-    /* axiox
+    axiox
       .post("http://localhost:5000/api/users/register", {
         email,
         password,
@@ -81,71 +30,62 @@ const Register = ({ setLogoutUser }) => {
         setEmail("");
         setPassword("");
         setLogoutUser(false);
-        navigate.push("/");
+        navigate("/");
       })
       .catch((error) => {
         console.log("Error:", error)
         setError(error.response.data.message)
-      }); */
-//  };
+      });
+  };
   return (
     <div>
-      <h2>Register Page</h2>
+      <h2 className="text-orange-400 font-bold text-xl" >Register Page</h2>
+      {error && <p className="text-red-500">{error}</p>}
       <form
+        noValidate
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={login}
       >
-        <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
-            Name:
-        <input
-          id="username"
-          type="text"
-          className="text-slate-800"
-          value={name}
-          onChange={onInputChange}
-          required
-        />
-        </div>
-        <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
-            Email:
+        
+  <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
+    E-mail
         <input
           id="email"
           type="text"
-          className="text-slate-800"
+          className="text-slate-800 ml-4 p-4"
           value={email}
-          onChange={onInputChange}
+          onChange={(e) => setEmail(e.target.value)}
         />
         </div>
         <br />
-        <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
+        <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
+          Username 
+          <input
+          id="username"
+          type="text"
+          classname="text-slate-800 ml-4 p-4"
+          value={username}
+          onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
             Password
         <input
           id="password"
           type="password"
-          className="text-slate-800"
+          className="text-slate-800 ml-4 p-4"
           value={password}
-          onChange={onInputChange}
-        />
-        </div>
-        <div className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium capitalize" >
-            Confirm Password
-        <input
-          id="password"
-          type="password"
-          className="text-slate-800"
-          value={confirmpassword}
-          onChange={onInputChange}
+          onChange={(e) => setPassword(e.target.value)}
         />
         </div>
         <br />
-        <button
-          type="submit"
-        >
-          Register
+        <button type="submit" className="text-orange-400 border rounded-lg text-bold text-xl" >
+          Login
         </button>
       </form>
       <p>
-        Already have an account then please <Link to="/login">Login</Link>
+        Don't have an account then please do{" "}
+        <Link to="/register">Register</Link> yourself
       </p>
     </div>
   );

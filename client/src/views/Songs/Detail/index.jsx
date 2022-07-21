@@ -113,10 +113,10 @@ const {
    <div className="flex-row  place-items-center">
    {isEdit ? (
             <div>
-            <button onClick={handleAceptar} >Aceptar</button>
-            <button onClick={handleCancelar} >Cancelar</button>
+            <button className="fancybuttonaccept font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 mr-4" onClick={handleAceptar} >Aceptar</button>
+            <button className="fancybuttoncancel font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 ml-4" onClick={handleCancelar} >Cancelar</button>
             </div>
-        ) : (<button onClick={handleEditar} >Editar</button>)}
+        ) : (<button className="fancybutton font-lato font-bold sm:text-xl text-sm text-white capitalize p-2"  onClick={handleEditar} >Editar</button>)}
     <SongTitle
      title={songDetailForEdit ?  (songDetailForEdit.title ?? 'Sin titulo 2') : 'Sin titulo 2'} isEdit={isEdit} titleChangeHandler={titleChangeHandler}
     />

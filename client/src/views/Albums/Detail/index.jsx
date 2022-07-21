@@ -34,7 +34,7 @@ const deleteHandler = (songId) =>
   refetch();
 }
 const SongsMap = () => {
-  return songs.map((song) => <div className="flex justify-center px-6 text-clip text-xl text-orange-300" key={song.id}><h2>{song.title}</h2><button onClick={(e) =>deleteHandler(song.id)}>delete</button></div>)
+  return songs.map((song) => <div className="flex justify-center text-clip text-xl text-orange-300 mb-6 mt-6" key={song.id}><h2 className="border rounded-lg border-gray-600  px-6 mr-4" >{song.title}</h2><button className=" font-lato font-bold sm:text-lg text-sm p-2 capitalize ml-4 fancybuttoncancel" onClick={(e) =>deleteHandler(song.id)}>delete</button></div>)
 }
 console.log(albumId, albumDetail, songs)
  const renderContent = () => {
@@ -50,10 +50,10 @@ console.log(albumId, albumDetail, songs)
     />
     <LeftContainer imageUrl={albumDetail.cover_big} />
     {songs && songs.length > 0 ? ( 
-          <div className="block h-screen p-6 rounded-lg items-center justify-center max-w-sm m-5 px-5 pb-16 text-center" ><h3 className="text-orange-500 text-3xl px-6 flex justify-center" >Songs</h3>
+          <div className="block h-screen p-6 rounded-lg items-center justify-center max-w-sm m-5 px-5 pb-16 text-center" ><h3 className="text-orange-500 sm:text-4xl text-3xl font-bold px-6 flex justify-center" >Songs</h3>
           <SongsMap />
           <Link to={`/songs/add/${albumId}/${songs[0].artist_id}`}>
-            <button className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
+            <button className="fancybuttonaccept capitalize text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium">
             add songs
             </button>
           </Link>

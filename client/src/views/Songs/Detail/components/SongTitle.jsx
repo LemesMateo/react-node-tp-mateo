@@ -15,6 +15,7 @@ const SongTitle = ({title, isEdit, titleChangeHandler}) => {
         {isEdit ? (
             <div>
             <input value={title}
+            className="bg-gray-700 mt-4 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500 font-lato font-bold sm:text-xl text-sm capitalize p-2"
             id={songId}
             onChange={(e) => titleChangeHandler(e)}
             />

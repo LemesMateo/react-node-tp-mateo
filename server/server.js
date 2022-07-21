@@ -132,46 +132,18 @@ app.get("/api/songs/getById", async (req, res) => {
   );
 });
 
-/* app.post('/api/songs/add', async (req, res)=>{
-    await client.query(`INSERT INTO song SET ${req.body}`, (err, result) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send(result);
-        }
-    });
-}); */
 
 app.post("/api/songs/add", async (req, res) => {
-  //const readable = req.body.readable;
-  console.log('/api/songs/add',req.body)
   const title = req.body.title;
-  //const link = req.body.link;
-  //const duration = req.body.duration;
-  //const rank = req.body.rank;
-  //const preview = req.body.preview;
   const type = 'track';
   const artist_id = req.body.artistId;
   const album_id = req.body.albumId;
   const lyrics = req.body.lyrics;
 
-  /*  await client.query(`INSERT INTO song SET ${req.body}`, (err, rows) => {
-        if (err) {
-            console.log(err);
-          } else {
-            res.send(rows);
-          }
-    }); */
   client.query(
-    //`INSERT INTO song (readable, title, link, duration, rank, preview, type, artist_id, album_id, lyrics) VALUES (?,?,?,?,?,?,?,?,?,?)`,
     `INSERT INTO song (title,type, artist_id, album_id, lyrics) VALUES (?,?,?,?,?)`,
     [
-      //readable,
       title,
-      //link,
-      //duration,
-      //rank,
-      //preview,
       type,
       artist_id,
       album_id,
@@ -191,8 +163,6 @@ app.post("/api/songs/edit/:id", (req, res) => {
   const id = req.params.id;
   const title = req.body.title.replace(/"/g, '');
   const lyrics = req.body.lyrics.replace(/"/g, '');
-
-  console.log("patch(/api/songs/edit)", title, lyrics)
   client.query(
     `UPDATE song SET title="${title}", lyrics="${lyrics}" WHERE id="${id}"`,
     [title, lyrics, id],
@@ -211,7 +181,6 @@ app.post("/api/songs/edit/:id", (req, res) => {
 });
  */
 app.delete("/api/songs/delete/:songId", async (req, res) => {
-  console.log('/api/songs/delete/', req.params.songId)
   const id = req.params.songId;
   client.query("DELETE FROM song WHERE id = ?", id, (err, result) => {
     if (err) {
