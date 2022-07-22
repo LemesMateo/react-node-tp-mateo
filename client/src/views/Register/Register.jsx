@@ -2,34 +2,41 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axiox from "axios";
 import { useRegisterUserMutation } from "../../services/authApi";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux";
 const Register = ({ setLogoutUser }) => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
   const [error, setError] = useState("");
   let navigate = useNavigate();
 
-  const login = (e) => {
+
+  useEffect(() => {
+    if(password !== repassword)
+      setError("La password no coincide")
+    else
+      setError("")
+  }, [repassword])
+  
+  const register = (e) => {
+    
     e.preventDefault();
     axiox
       .post("http://localhost:5000/api/users/register", {
         email,
         password,
+        name
       })
       .then((response) => {
         console.log("response", response);
-        localStorage.setItem(
-          "login",
-          JSON.stringify({
-            userLogin: true,
-            token: response.data.JWT,
-          })
-        );
         setError("");
         setEmail("");
         setPassword("");
-        setLogoutUser(false);
+        setName("");
+        setRepassword("");
+        setLogoutUser(true);
         navigate("/");
       })
       .catch((error) => {
@@ -44,43 +51,55 @@ const Register = ({ setLogoutUser }) => {
       <form
         noValidate
         autoComplete="off"
-        onSubmit={login}
+        onSubmit={register}
       >
-        
-  <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
-    E-mail
-        <input
-          id="email"
-          type="text"
-          className="text-slate-800 ml-4 p-4"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+
+        <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
+          E-mail
+          <input
+            id="email"
+            type="text"
+            className="text-slate-800 ml-4 p-4"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <br />
         <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
-          Username 
+          Name
           <input
-          id="username"
-          type="text"
-          classname="text-slate-800 ml-4 p-4"
-          value={username}
-          onChange={(e) => setName(e.target.value)}
+            id="name"
+            type="text"
+            className="text-slate-800 ml-4 p-4"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
-            Password
-        <input
-          id="password"
-          type="password"
-          className="text-slate-800 ml-4 p-4"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          Password
+          <input
+            id="password"
+            type="password"
+            className="text-slate-800 ml-4 p-4"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <br />
-        <button type="submit" className="text-orange-400 border rounded-lg text-bold text-xl" >
-          Login
+        <div className="text-orange-300 mr-4  hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium capitalize" >
+          Repeat Password
+          <input
+            id="repassword"
+            type="password"
+            className="text-slate-800 ml-4 p-4"
+            value={repassword}
+            onChange={(e) => setRepassword(e.target.value)}
+          />
+        </div>
+        <br />
+
+        <button type="submit" disabled={(password !== repassword) || password ==''} className="text-orange-400 border rounded-lg text-bold text-xl" >
+          Register
         </button>
       </form>
       <p>

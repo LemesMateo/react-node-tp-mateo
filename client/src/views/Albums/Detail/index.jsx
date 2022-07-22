@@ -30,7 +30,9 @@ const {
 const deleteHandler = (songId) =>
 {
   console.log('deleteHandler', songId)
-  deleteSong(songId);
+  deleteSong(songId);    
+
+  
   refetch();
 }
 const SongsMap = () => {

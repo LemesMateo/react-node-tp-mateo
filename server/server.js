@@ -8,6 +8,8 @@ const client = require("./db.js");
 const app = express();
 const router = express.Router();
 const loginRouter = require("./controllers/login");
+const isAuth = require("./middlewares/isAuth")
+
 var options = {
   "origin": "*",
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -133,7 +135,7 @@ app.get("/api/songs/getById", async (req, res) => {
 });
 
 
-app.post("/api/songs/add", async (req, res) => {
+app.post("/api/songs/add", isAuth, async (req, res) => {
   const title = req.body.title;
   const type = 'track';
   const artist_id = req.body.artistId;
@@ -159,7 +161,7 @@ app.post("/api/songs/add", async (req, res) => {
   );
 });
 
-app.post("/api/songs/edit/:id", (req, res) => {
+app.post("/api/songs/edit/:id", isAuth, (req, res) => {
   const id = req.params.id;
   const title = req.body.title.replace(/"/g, '');
   const lyrics = req.body.lyrics.replace(/"/g, '');
@@ -180,7 +182,7 @@ app.post("/api/songs/edit/:id", (req, res) => {
     await songsModel.editSong(...req.body, req.body.id);    
 });
  */
-app.delete("/api/songs/delete/:songId", async (req, res) => {
+app.delete("/api/songs/delete/:songId", isAuth, async (req, res) => {
   const id = req.params.songId;
   client.query("DELETE FROM song WHERE id = ?", id, (err, result) => {
     if (err) {

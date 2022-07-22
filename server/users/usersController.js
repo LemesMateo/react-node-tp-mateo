@@ -47,19 +47,19 @@ const listOne = async(req, res, next) => {
 
 //register
 const register = async(req, res, next) => {
-    const cleanBody = matchedData(req)
-    const image = `${public_url}/${req.file.filename}`
-    const password = await encrypt(req.body.password)
-    const dbResponse = await addNewUser({...cleanBody, password, image })
-    if (dbResponse instanceof Error) return next(dbResponse);
-
-    const user = {
-        id: cleanBody.body.id,
-        name: cleanBody.name,
-        email: cleanBody.email
+    try{
+        const cleanBody = matchedData(req)
+        //const image = `${public_url}/${req.file.filename}`
+        const password = await encrypt(req.body.password)
+        const dbResponse = await addNewUser({...cleanBody, password })
+        if (dbResponse instanceof Error) return next(dbResponse);
+        
+        res.status(201).json({ message: "User Created!" })
+        
+    } catch(e)
+    {
+        res.status(500).json({ message: e.message })
     }
-    const token = await tokenSign(user, "1h")
-    res.status(201).json({ message: "User Created!", JWT: token })
 }
 
 

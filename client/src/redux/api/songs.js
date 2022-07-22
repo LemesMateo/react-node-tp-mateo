@@ -43,7 +43,8 @@ export const songsApi = createApi({
         url: `/songs/add`,
         method: "POST",
         body: song,
-        invalidatesTags: ['Songs']
+        invalidatesTags: ['Songs'],
+        headers: {'Authorization': `Bearer ${JSON.parse(localStorage.getItem("login")).token}`}
       }),
     }),
     updateSong: builder.mutation({
@@ -51,13 +52,15 @@ export const songsApi = createApi({
         url: `/songs/edit/${song.id}`,
         method: "POST",
         body: song,
-        invalidatesTags: ['Songs']
+        invalidatesTags: ['Songs'],
+        headers: {'Authorization': `Bearer ${JSON.parse(localStorage.getItem("login")).token}`}
       }),
     }),
     deleteSong: builder.mutation({
       query: ( songId ) => ({
         url: `/songs/delete/${songId}`,
-        method: "DELETE"
+        method: "DELETE",
+        headers: {'Authorization': `Bearer ${JSON.parse(localStorage.getItem("login")).token}`}
       }),
     }),
   }),
