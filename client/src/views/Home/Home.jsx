@@ -50,7 +50,7 @@ function Home() {
     <div>
     <div className="inline-flex flex-col justify-center relative text-gray-500">
         <div className="relative">
-    <input
+      <input
           className="input"
           type="text"
           name="text"
@@ -61,13 +61,13 @@ function Home() {
           onChange={(e) => inputSearchChangeHandler(e)}
         >
         </input>
-        <Outlet/>
         </div>
-        <div className="flex flex-col sm:flex-row justify-evenly" >
+        <div className="flex flex-col sm:flex-row justify-evenly relative" >
             <Songs {...propSongs}/>
             <Artists {...propArtists}/>
           <Albums {...propAlbums}  />   
         </div>
+        <Outlet/>
         </div>
         </div>
     </>

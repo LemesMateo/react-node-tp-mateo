@@ -38,7 +38,7 @@ const deleteHandler = (songId) =>
 const SongsMap = () => {
   return songs.map((song) => <div className="flex justify-center text-clip text-xl text-orange-300 mb-6 mt-6" key={song.id}><h2 className="border rounded-lg border-gray-600  px-6 mr-4" >{song.title}</h2><button className=" font-lato font-bold sm:text-lg text-sm p-2 capitalize ml-4 fancybuttoncancel" onClick={(e) =>deleteHandler(song.id)}>delete</button></div>)
 }
-console.log(albumId, albumDetail, songs)
+
  const renderContent = () => {
   if (isLoading || isFetching) {
    return <Loading message="Obteniendo informacion del album..." />;

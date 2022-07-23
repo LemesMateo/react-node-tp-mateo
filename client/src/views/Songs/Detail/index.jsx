@@ -7,7 +7,6 @@ import { useFetchSongQuery, useAddSongMutation, useDeleteSongMutation, useUpdate
 const Detail = () => {
 const navigate = useNavigate();
 const { songId, albumId, artistId } = useParams();
-console.log("params:",songId, albumId, artistId)
 const {
         data: songDetail,
         isLoading: isLoadingSong,
@@ -32,60 +31,28 @@ const {
         }
         
       }, [songDetail])
-      
-
-/* const handleSubmit = (e) => {
-  e.preventDefault();
-  addTodo({userId:1, title:newSong, completed:false})
-  setNewSong('')
-} */
-/* const newItemSection = 
-<form onSubmit={handleSubmit}>
-  <label htmlFor="new-song">Enter a new song</label>
-  <div className="new-song">
-    <input
-    type="text"
-    id="new-song"
-    value={newSong}
-    onChange={(e) => setNewSong(e.target.value)}
-    placeholder="Enter new Song"
-    />
-  </div>
-  <button className="submit" ></button>
-
-</form>
- */
-
-
 
   const [isEdit, setIsEdit] = useState(false);
   const [songDetailForEdit, setSongDetailForEdit] = useState(songDetail);  
   const [
-    updateSong, // This is the mutation trigger
-    { data: updateResponse, error, isLoading: isUpdating }, // This is the destructured mutation result
+    updateSong, 
+    { data: updateResponse, error, isLoading: isUpdating }, 
   ] = useUpdateSongMutation()
   const [
-    addSong, // This is the mutation trigger
-    { data: addResponse, addError, isLoading: isAdding }, // This is the destructured mutation result
+    addSong, 
+    { data: addResponse, addError, isLoading: isAdding }, 
   ] = useAddSongMutation()
-
-
-
   
   const handleAceptar = () => {
-    setIsEdit(false);
-    console.log("grabamos",songDetailForEdit)
-    
-    console.log(updateResponse, error)
+    setIsEdit(false);    
     if(albumId && artistId){
       addSong(songDetailForEdit);
       navigate(`/albums/detail/${albumId}`);
-      
     } else{
       updateSong(songDetailForEdit);
     }
       
-    //llamar al mutations
+
   }
   const handleCancelar = () => {
       setIsEdit(false);
@@ -129,11 +96,6 @@ const {
 return (
     <>
     
-{/* <a href="#" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-    <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-</a> */}
-
   <div className="block p-6  rounded-lg items-center justify-center">
    {renderContent()}
   </div>

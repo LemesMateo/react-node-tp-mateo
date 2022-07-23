@@ -98,7 +98,7 @@ const Register = ({ setLogoutUser }) => {
         </div>
         <br />
 
-        <button type="submit" disabled={(password !== repassword) || password ==''} className="text-orange-400 border rounded-lg text-bold text-xl" >
+        <button type="submit" disabled={(password !== repassword) || password ==''} className="fancybuttonaccept font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 mr-4" >
           Register
         </button>
       </form>

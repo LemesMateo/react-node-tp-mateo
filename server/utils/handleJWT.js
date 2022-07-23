@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken")
 const jwt_key = "asdajkhkl123"
 // const jwt_key = process.env.jwt_secret
 const tokenSign = async(user, time) => {
-    console.log("User jwt_key:", user, jwt_key)
     return jwt.sign(user, jwt_key, { expiresIn: time })
 }
 
