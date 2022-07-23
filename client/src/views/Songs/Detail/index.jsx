@@ -5,6 +5,8 @@ import Lyrics from "./components/Lyrics"
 import { useEffect, useState } from "react";
 import { useFetchSongQuery, useAddSongMutation, useDeleteSongMutation, useUpdateSongMutation } from "../../../redux/api/songs";
 const Detail = () => {
+const isLoginTrue = JSON.parse(localStorage.getItem("login")); 
+console.log("islogintrue",isLoginTrue);
 const navigate = useNavigate();
 const { songId, albumId, artistId } = useParams();
 const {
@@ -68,7 +70,25 @@ const {
   const lyricsChangeHandler = (e) => {
     setSongDetailForEdit({...songDetailForEdit, lyrics:e.target.value});
   };
+  const Botones = () => {
+    if (isEdit)
+    return  (
+      <div>
+      <button className="fancybuttonaccept font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 mr-4" onClick={handleAceptar} >Aceptar</button>
+      <button className="fancybuttoncancel font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 ml-4" onClick={handleCancelar} >Cancelar</button>
+      </div>
+    ) 
+    else
+      return (<button className="fancybutton font-lato font-bold sm:text-xl text-sm text-white capitalize p-2"  onClick={handleEditar} >Editar</button>)
+  };
+/*    {isEdit ? (
+      <div>
+      <button className="fancybuttonaccept font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 mr-4" onClick={handleAceptar} >Aceptar</button>
+      <button className="fancybuttoncancel font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 ml-4" onClick={handleCancelar} >Cancelar</button>
+      </div>
+  ) : (<button className="fancybutton font-lato font-bold sm:text-xl text-sm text-white capitalize p-2"  onClick={handleEditar} >Editar</button>)}*/
 
+  
  const renderContent = () => {
   if (isLoadingSong || isFetchingSong) {
    return <Loading message="Obteniendo informacion de la canción..." />;
@@ -78,12 +98,7 @@ const {
   return (
    <>
    <div className="flex-row  place-items-center">
-   {isEdit ? (
-            <div>
-            <button className="fancybuttonaccept font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 mr-4" onClick={handleAceptar} >Aceptar</button>
-            <button className="fancybuttoncancel font-lato font-bold sm:text-xl text-sm text-white capitalize p-2 ml-4" onClick={handleCancelar} >Cancelar</button>
-            </div>
-        ) : (<button className="fancybutton font-lato font-bold sm:text-xl text-sm text-white capitalize p-2"  onClick={handleEditar} >Editar</button>)}
+    {isLoginTrue && isLoginTrue.userLogin ? (<Botones/>) : (<></>)}
     <SongTitle
      title={songDetailForEdit ?  (songDetailForEdit.title ?? 'Sin titulo 2') : 'Sin titulo 2'} isEdit={isEdit} titleChangeHandler={titleChangeHandler}
     />

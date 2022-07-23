@@ -7,9 +7,11 @@ import {default as Albums} from '../Albums/Results';
 import {default as Artists} from '../Artists/Results';
 import {default as Songs} from '../Songs/Results';
 import Navbar from "../../components/Navbar";
-import { Outlet } from "react-router";
+import { Outlet, useParams } from "react-router";
+
 function Home() {
-    const [search, setSearch] = useState([]);
+  const { search } = useParams();
+  //
   const {
     data: songs,
     isLoading: isLoadingSongs,
@@ -32,9 +34,6 @@ function Home() {
     error: errorAlbums,
   } = useFetchAlbumsQuery(search, {skip: search.length>2 ? false : true});
 
-  const inputSearchChangeHandler = (e) => {
-    setSearch(e.target.value);
-  };
   let propAlbums = {
     albums, isLoadingAlbums, isSuccessAlbums, isFetchingAlbums, errorAlbums
   }
@@ -49,19 +48,6 @@ function Home() {
     <>
     <div>
     <div className="inline-flex flex-col justify-center relative text-gray-500">
-        <div className="relative">
-      <input
-          className="input"
-          type="text"
-          name="text"
-          required=""
-          placeholder="Search Songs, Artists, Albums"
-          id="search"
-          value={search}
-          onChange={(e) => inputSearchChangeHandler(e)}
-        >
-        </input>
-        </div>
         <div className="flex flex-col sm:flex-row justify-evenly relative" >
             <Songs {...propSongs}/>
             <Artists {...propArtists}/>
