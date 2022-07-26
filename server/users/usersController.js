@@ -2,7 +2,7 @@ const { getAllUsers, getUserById, addNewUser, deleteUserById, editUserById, logi
 const notNumber = require("../utils/notNumber")
 const { encrypt, compare } = require("../utils/handlePassword")
 const { matchedData } = require("express-validator")
-const public_url = 'http://localhost:5000/'
+const public_url = 'https://mateo-tp-final-utn.herokuapp.com/'
 const { tokenSign, tokenVerify } = require("../utils/handleJWT")
 
 //get all users
@@ -67,7 +67,6 @@ const register = async(req, res, next) => {
 const login = async(req, res, next) => {
     const dbResponse = await loginUser(req.body.email);
     if (!dbResponse.length) return next();
-    console.log("Password:", req.body.password, dbResponse[0].password)
     if (await compare(req.body.password, dbResponse[0].password)) {
         const user = {
             id: dbResponse[0].id,

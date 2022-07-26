@@ -24,7 +24,7 @@ const Register = ({ setLogoutUser }) => {
     
     e.preventDefault();
     axiox
-      .post("http://localhost:5000/api/users/register", {
+      .post("https://mateo-tp-final-utn.herokuapp.com/api/users/register", {
         email,
         password,
         name

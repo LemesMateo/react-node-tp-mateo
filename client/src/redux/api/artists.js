@@ -7,7 +7,7 @@ const headers = {
 
 export const artistsApi = createApi({
  reducerPath: 'artistsApi',
- baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
+ baseQuery: fetchBaseQuery({ baseUrl: 'https://mateo-tp-final-utn.herokuapp.com/api' }),
  endpoints: (builder) => ({
   fetchArtists: builder.query({
    query: (name) => ({

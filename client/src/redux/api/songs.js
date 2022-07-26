@@ -7,7 +7,7 @@ const headers = {
 
 export const songsApi = createApi({
   reducerPath: "songsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://mateo-tp-final-utn.herokuapp.com/api" }),
   tagTypes: ['Songs'],
   endpoints: (builder) => ({
     fetchSongs: builder.query({

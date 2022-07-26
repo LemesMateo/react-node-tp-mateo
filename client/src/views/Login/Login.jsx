@@ -11,7 +11,7 @@ const Login = ({ setLogoutUser }) => {
   const login = (e) => {
     e.preventDefault();
     axiox
-      .post("http://localhost:5000/api/users/login", {
+      .post("https://mateo-tp-final-utn.herokuapp.com/api/users/login", {
         email,
         password,
       })

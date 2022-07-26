@@ -2,10 +2,10 @@ const mysql = require("mysql");
 const util = require("util");
 
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'rocklyrics',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASS || '',
+    host: "us-cdbr-east-06.cleardb.net",
+    database: "heroku_d754403b5e9753d",
+    user: "b677b1b5fc94b5",
+    password: "6c6653e0",
 });
 
 pool.getConnection((err, connection) => {
@@ -18,3 +18,5 @@ pool.getConnection((err, connection) => {
 
 pool.query = util.promisify(pool.query);
 module.exports = pool;
+
+//mysql://b677b1b5fc94b5:6c6653e0@us-cdbr-east-06.cleardb.net/heroku_d754403b5e9753d?reconnect=true
